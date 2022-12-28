@@ -29,5 +29,5 @@ public class Category {
 
     @Column
     @NotNull
-    private LocalDate createdDate;
+    private LocalDate created_Date;
 }
