@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,8 @@ public class Category {
     @NotNull
     @NotBlank
     private String name;
+
+    @Column
+    @NotNull
+    private LocalDate createdDate;
 }
