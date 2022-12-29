@@ -14,4 +14,6 @@ public interface CategoryService {
     public List<CategoryDTO> findAll();
 
     public CategoryDTO findById( Integer Id);
+
+    CategoryDTO create ( CategoryDTO dto );
 }
