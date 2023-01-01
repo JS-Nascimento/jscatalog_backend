@@ -27,13 +27,20 @@ public class Product {
     @NotNull
     @NotBlank
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
     private String imageUrl;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant date;
-
+    @ManyToMany
+    @JoinTable(
+            name="product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+            )
     Set <Category> categories = new HashSet <>();
 
     public Product ( Integer id, String name, String description, Double price, String imageUrl, Instant date ) {
