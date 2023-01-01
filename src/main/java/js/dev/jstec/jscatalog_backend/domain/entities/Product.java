@@ -1,7 +1,9 @@
 package js.dev.jstec.jscatalog_backend.domain.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 import javax.persistence.*;
@@ -13,28 +15,41 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@Getter
+
 @NoArgsConstructor
 @Entity
 @Table
+@EqualsAndHashCode
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Integer id;
 
     @Column(length = 60)
     @NotEmpty
     @NotNull
     @NotBlank
+    @Getter
+    @Setter
     private String name;
 
     @Column(columnDefinition = "TEXT")
+    @Getter
+    @Setter
     private String description;
+    @Getter
+    @Setter
     private Double price;
+    @Getter
+    @Setter
     private String imageUrl;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @Getter
+    @Setter
     private Instant date;
+    @Getter
     @ManyToMany
     @JoinTable(
             name="product_category",
@@ -51,42 +66,5 @@ public class Product {
         this.imageUrl = imageUrl;
         this.date = date;
 
-    }
-
-    public void setId ( Integer id ) {
-        this.id = id;
-    }
-
-    public void setName ( String name ) {
-        this.name = name;
-    }
-
-    public void setDescription ( String description ) {
-        this.description = description;
-    }
-
-    public void setPrice ( Double price ) {
-        this.price = price;
-    }
-
-    public void setImageUrl ( String imageUrl ) {
-        this.imageUrl = imageUrl;
-    }
-
-    public void setDate ( Instant date ) {
-        this.date = date;
-    }
-
-    @Override
-    public boolean equals ( Object o ) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return id.equals( product.id );
-    }
-
-    @Override
-    public int hashCode () {
-        return Objects.hash( id );
     }
 }
