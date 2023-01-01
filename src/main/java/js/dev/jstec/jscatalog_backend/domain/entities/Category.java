@@ -27,7 +27,18 @@ public class Category {
     @NotBlank
     private String name;
 
-    @Column
-    @NotNull
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate created_Date;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private LocalDate updated_Date;
+    @PrePersist
+    public void prePersist(){
+        created_Date = LocalDate.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        updated_Date = LocalDate.now();
+    }
+
 }

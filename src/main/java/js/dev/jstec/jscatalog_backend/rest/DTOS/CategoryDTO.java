@@ -4,7 +4,6 @@ import js.dev.jstec.jscatalog_backend.domain.entities.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 @Data
@@ -12,14 +11,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CategoryDTO {
 
-    private Integer Id;
+    private Integer id;
     private String name;
     private LocalDate created_Date;
-
-    public CategoryDTO( @NotNull Category entity ){
-        this.Id = entity.getId();
+    private LocalDate updated_Date;
+    public CategoryDTO( Category entity ){
+        this.id = entity.getId();
         this.name = entity.getName();
         this.created_Date = entity.getCreated_Date();
+        this.updated_Date = entity.getUpdated_Date();
     }
 
 }
