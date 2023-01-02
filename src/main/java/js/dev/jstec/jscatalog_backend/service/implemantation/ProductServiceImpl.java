@@ -47,8 +47,9 @@
                 @Override
                 @Transactional
                 public ProductDTO create ( ProductDTO dto ) {
-                   Product product =  repository.save( mapperToEntity( dto ) );
-                   return new ProductDTO(product, product.getCategories());
+                   Product product = new Product();
+                    repository.save( mapperToEntity( dto, product ));
+                        return new ProductDTO(product, product.getCategories());
                 }
 
                 @Override
@@ -56,8 +57,8 @@
                 public ProductDTO update (Integer id,  ProductDTO dto ) {
                    try {
                        Product product = repository.getReferenceById( id );
-
-                       return modelMapper.map( repository.save( product ) , ProductDTO.class );
+                        repository.save( mapperToEntity( dto, product ));
+                            return new ProductDTO(product, product.getCategories());
 
                    } catch (EntityNotFoundException e) {
                         throw new ResourceNotFoundException( "Produto não encontrado." );
@@ -77,8 +78,7 @@
                    }
 
                 }
-                private Product mapperToEntity( ProductDTO dto){
-                   Product entity = new Product();
+                private Product mapperToEntity( ProductDTO dto, Product entity){
 
                    entity.setName( dto.getName() );
                    entity.setDescription( dto.getDescription() );
