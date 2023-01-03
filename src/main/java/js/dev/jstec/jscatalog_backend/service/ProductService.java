@@ -4,6 +4,7 @@ package js.dev.jstec.jscatalog_backend.service;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.ProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 
 public interface ProductService {
@@ -15,5 +16,5 @@ public interface ProductService {
 
     void delete ( Integer id );
 
-    Page<ProductDTO> findAllPaged ( PageRequest pageRequest );
+    Page<ProductDTO> findAllPaged ( Pageable pageable );
 }

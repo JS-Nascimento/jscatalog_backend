@@ -9,11 +9,10 @@
     import js.dev.jstec.jscatalog_backend.service.ProductService;
     import js.dev.jstec.jscatalog_backend.service.exception.DatabaseIntegrityException;
     import js.dev.jstec.jscatalog_backend.service.exception.ResourceNotFoundException;
-    import org.modelmapper.ModelMapper;
     import org.springframework.dao.DataIntegrityViolationException;
     import org.springframework.dao.EmptyResultDataAccessException;
     import org.springframework.data.domain.Page;
-    import org.springframework.data.domain.PageRequest;
+    import org.springframework.data.domain.Pageable;
     import org.springframework.stereotype.Service;
     import org.springframework.transaction.annotation.Transactional;
 
@@ -21,19 +20,19 @@
 
     @Service
     public class ProductServiceImpl implements ProductService {
-                private final ModelMapper modelMapper;
+
                 private final ProductRepository repository;
                 private final CategoryRepository categoryRepository;
 
-               public ProductServiceImpl ( ProductRepository repository, ModelMapper modelMapper, CategoryRepository categoryRepository ) {
+               public ProductServiceImpl ( ProductRepository repository,CategoryRepository categoryRepository ) {
                     this.repository = repository;
-                    this.modelMapper = modelMapper;
+
                     this.categoryRepository = categoryRepository;
                }
              
                 @Transactional(readOnly = true)
-                public Page <ProductDTO> findAllPaged ( PageRequest pageRequest) {
-                        Page <Product> list = repository.findAll(pageRequest);
+                public Page <ProductDTO> findAllPaged ( Pageable pageable) {
+                        Page <Product> list = repository.findAll(pageable);
                             return list.map(  product -> (new ProductDTO(product, product.getCategories()))  );
                 }
 
@@ -78,7 +77,10 @@
                    }
 
                 }
-                private Product mapperToEntity( ProductDTO dto, Product entity){
+
+
+
+        private Product mapperToEntity( ProductDTO dto, Product entity){
 
                    entity.setName( dto.getName() );
                    entity.setDescription( dto.getDescription() );
