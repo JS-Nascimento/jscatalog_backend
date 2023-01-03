@@ -5,6 +5,7 @@ import js.dev.jstec.jscatalog_backend.Factory;
 
 import js.dev.jstec.jscatalog_backend.domain.entities.Product;
 import js.dev.jstec.jscatalog_backend.domain.repositories.ProductRepository;
+import js.dev.jstec.jscatalog_backend.service.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @DataJpaTest
 public class ProductRepositoryTest {
@@ -58,9 +60,32 @@ public class ProductRepositoryTest {
         assertThat(product.getName()).isEqualTo( newProduct.getName() );
         assertThat(product.getDescription()).isEqualTo( newProduct.getDescription() );
         assertThat(product.getImageUrl()).isEqualTo( newProduct.getImageUrl() );
+        assertThat(product.getPrice()).isEqualTo( newProduct.getPrice() );
         assertThat(product.getCategories() ).isSameAs( newProduct.getCategories());
 
 
     }
+
+    @Test
+    public void shouldReturnObjectWhenExists(){
+
+        Product product = Factory.createProduct();
+        Optional <Product> founded = productRepository.findById( product.getId() ) ;
+        assertThat( founded ).isPresent();
+        assertThat( founded.get().getId() ).isEqualTo( product.getId() );
+
+    }
+    @Test
+    public void shouldThrowExceptionWhenObjectDoesNotExists(){
+
+        Optional <Product> founded = productRepository.findById( nonExistingId ) ;
+        assertThat( founded ).isNotPresent();
+        assertThat( founded ).isEmpty()
+                .isNotPresent()
+                ;
+
+    }
+
+
 
 }
