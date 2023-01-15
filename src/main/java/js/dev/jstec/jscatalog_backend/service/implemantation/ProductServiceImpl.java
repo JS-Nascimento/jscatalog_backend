@@ -40,7 +40,7 @@
                         public ProductDTO findById ( Integer id ) {
                             return repository.findById( id )
                                     .map( product -> (new ProductDTO(product, product.getCategories())) )
-                                    .orElseThrow( () -> new ResourceNotFoundException("Categoria não existe." ) );
+                                    .orElseThrow( () -> new ResourceNotFoundException("Produto não existe." ) );
                         }
 
                 @Override

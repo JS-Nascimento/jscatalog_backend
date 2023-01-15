@@ -11,8 +11,12 @@ public class Factory {
     public static Product createProduct(){
         Product product = new Product(1,"Como comer menos","Livros explica", 14.99, "https://img.com;img.png",
                 Instant.now());
-        product.getCategories().add( new Category(1,"Livros", LocalDate.now(), LocalDate.now()) );
+        product.getCategories().add( createCategory() );
         return product;
+    }
+    public static Category createCategory(){
+
+        return new Category(1,"Livros", LocalDate.now(), LocalDate.now()) ;
     }
     public static Product createNewProduct(){
         Product product = new Product(null,"Como comer menos","Livros explica", 14.99, "https://img.com;img.png",
