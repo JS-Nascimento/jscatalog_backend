@@ -1,11 +1,10 @@
-package js.dev.jstec.jscatalog_backend.repositories;
+package js.dev.jstec.jscatalog_backend.domain;
 import static org.assertj.core.api.Assertions.*;
 
 import js.dev.jstec.jscatalog_backend.Factory;
 
 import js.dev.jstec.jscatalog_backend.domain.entities.Product;
 import js.dev.jstec.jscatalog_backend.domain.repositories.ProductRepository;
-import js.dev.jstec.jscatalog_backend.service.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @DataJpaTest
 public class ProductRepositoryTest {

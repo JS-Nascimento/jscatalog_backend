@@ -1,4 +1,4 @@
-package js.dev.jstec.jscatalog_backend.services;
+package js.dev.jstec.jscatalog_backend.service;
 import static org.assertj.core.api.Assertions.*;
 import js.dev.jstec.jscatalog_backend.Factory;
 import js.dev.jstec.jscatalog_backend.domain.entities.Category;
