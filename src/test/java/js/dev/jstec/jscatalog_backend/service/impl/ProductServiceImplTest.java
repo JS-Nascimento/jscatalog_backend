@@ -1,4 +1,4 @@
-package js.dev.jstec.jscatalog_backend.service;
+package js.dev.jstec.jscatalog_backend.service.impl;
 import static org.assertj.core.api.Assertions.*;
 import js.dev.jstec.jscatalog_backend.Factory;
 import js.dev.jstec.jscatalog_backend.domain.entities.Category;
@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-public class ProductServiceTest {
+public class ProductServiceImplTest {
 
     @InjectMocks
     private ProductServiceImpl service;
