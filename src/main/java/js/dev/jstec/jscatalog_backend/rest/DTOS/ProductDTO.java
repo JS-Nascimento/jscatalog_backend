@@ -2,14 +2,15 @@ package js.dev.jstec.jscatalog_backend.rest.DTOS;
 
 import js.dev.jstec.jscatalog_backend.domain.entities.Category;
 import js.dev.jstec.jscatalog_backend.domain.entities.Product;
-import lombok.Builder;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
