@@ -4,8 +4,10 @@ import js.dev.jstec.jscatalog_backend.domain.entities.Category;
 import js.dev.jstec.jscatalog_backend.domain.entities.Product;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.ProductDTO;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Factory {
     public static Product createProduct(){
@@ -19,6 +21,7 @@ public class Factory {
         return new Category(1,"Livros", LocalDate.now(), LocalDate.now()) ;
     }
     public static Product createNewProduct(){
+
         Product product = new Product(null,"Como comer menos","Livros explica", 14.99, "https://img.com;img.png",
                 Instant.now());
         product.getCategories().add( new Category(1,"Livros", LocalDate.now(), LocalDate.now()) );
