@@ -89,9 +89,9 @@
                    entity.setImageUrl( dto.getImageUrl());
 
                    entity.getCategories().clear();
-                    for (CategoryDTO categoryDto: dto.getCategories()) {
-                        Category category = categoryRepository.getReferenceById( categoryDto.getId() );
-                        entity.getCategories().add( category );
+                    for (CategoryDTO categoryDto : dto.getCategoriesDto()) {
+                        Category category = categoryRepository.getReferenceById(categoryDto.getId());
+                        entity.getCategories().add(category);
                     }
                     return entity;
                 }

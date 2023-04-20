@@ -1,17 +1,16 @@
 package js.dev.jstec.jscatalog_backend.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -52,10 +51,11 @@ public class Product {
     @Getter
     @ManyToMany
     @JoinTable(
-            name="product_category",
+            name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
-            )
+    )
+    @JsonIgnore
     Set <Category> categories = new HashSet <>();
 
     public Product ( Integer id, String name, String description, Double price, String imageUrl, Instant date ) {

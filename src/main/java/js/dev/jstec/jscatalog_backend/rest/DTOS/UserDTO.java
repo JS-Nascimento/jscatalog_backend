@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +18,12 @@ public class UserDTO {
     @Setter
     private Long id;
     @Setter
+    @NotBlank(message = "Nome é obrigatório.")
     private String firstName;
     @Setter
     private String lastName;
     @Setter
+    @Email(message = "Email deve ser válido.")
     private String email;
     private Set<RoleDTO> roles = new HashSet<>();
 
