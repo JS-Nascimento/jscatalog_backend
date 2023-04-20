@@ -1,7 +1,10 @@
 package js.dev.jstec.jscatalog_backend.rest.DTOS;
 
 import js.dev.jstec.jscatalog_backend.domain.entities.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +12,6 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserDTO {
     @Setter
     private Long id;

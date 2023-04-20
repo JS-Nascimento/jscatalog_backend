@@ -6,13 +6,16 @@ import js.dev.jstec.jscatalog_backend.domain.repositories.RoleRepository;
 import js.dev.jstec.jscatalog_backend.domain.repositories.UserRepository;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.RoleDTO;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.UserDTO;
+import js.dev.jstec.jscatalog_backend.rest.DTOS.UserInsertDTO;
 import js.dev.jstec.jscatalog_backend.service.UserService;
 import js.dev.jstec.jscatalog_backend.service.exception.DatabaseIntegrityException;
 import js.dev.jstec.jscatalog_backend.service.exception.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
     private final RoleRepository roleRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository repository, RoleRepository roleRepository) {
         this.repository = repository;
@@ -46,10 +51,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO create(UserDTO dto) {
-        User User = new User();
-        repository.save(mapperToEntity(dto, User));
-        return new UserDTO(User);
+    public UserDTO create(UserInsertDTO dto) {
+        User user = new User();
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        repository.save(mapperToEntity(dto, user));
+        return new UserDTO(user);
     }
 
 
@@ -57,9 +63,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDTO update(Long id, UserDTO dto) {
         try {
-            User User = repository.getReferenceById(id);
-            repository.save(mapperToEntity(dto, User));
-            return new UserDTO(User);
+            User user = repository.getReferenceById(id);
+            repository.save(mapperToEntity(dto, user));
+            return new UserDTO(user);
 
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Produto não encontrado.");
@@ -86,6 +92,7 @@ public class UserServiceImpl implements UserService {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
+
 
         entity.getRoles().clear();
         for (RoleDTO roleDto : dto.getRoles()) {
