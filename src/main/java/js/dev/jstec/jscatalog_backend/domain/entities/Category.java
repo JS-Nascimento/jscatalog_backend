@@ -9,6 +9,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -26,14 +28,17 @@ public class Category {
     @NotNull
     @NotBlank
     private String name;
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate created_Date;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private LocalDate updated_Date;
+
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         created_Date = LocalDate.now();
     }
     @PreUpdate
