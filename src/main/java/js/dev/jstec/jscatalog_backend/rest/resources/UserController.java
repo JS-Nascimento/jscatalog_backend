@@ -2,6 +2,7 @@ package js.dev.jstec.jscatalog_backend.rest.resources;
 
 import js.dev.jstec.jscatalog_backend.rest.DTOS.UserDTO;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.UserInsertDTO;
+import js.dev.jstec.jscatalog_backend.rest.DTOS.UserUpdateDTO;
 import js.dev.jstec.jscatalog_backend.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,10 +47,10 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id, @RequestBody UserDTO dto) {
-        dto = service.update(id, dto);
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto) {
+        UserDTO newUserdto = service.update(id, dto);
 
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(newUserdto);
     }
 
     @DeleteMapping("{id}")

@@ -7,14 +7,19 @@ import js.dev.jstec.jscatalog_backend.domain.repositories.UserRepository;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.RoleDTO;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.UserDTO;
 import js.dev.jstec.jscatalog_backend.rest.DTOS.UserInsertDTO;
+import js.dev.jstec.jscatalog_backend.rest.DTOS.UserUpdateDTO;
 import js.dev.jstec.jscatalog_backend.service.UserService;
 import js.dev.jstec.jscatalog_backend.service.exception.DatabaseIntegrityException;
 import js.dev.jstec.jscatalog_backend.service.exception.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +29,7 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepository repository;
     private final RoleRepository roleRepository;
     @Autowired
@@ -61,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
         try {
             User user = repository.getReferenceById(id);
             repository.save(mapperToEntity(dto, user));
@@ -100,5 +106,16 @@ public class UserServiceImpl implements UserService {
             entity.getRoles().add(role);
         }
         return entity;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDetails userDetails = repository.findByEmail(username);
+        if (userDetails == null) {
+            logger.error("User not found: " + username);
+            throw new UsernameNotFoundException("Usuário não encontrado.");
+        }
+        logger.info("User found : " + username);
+        return userDetails;
     }
 }
